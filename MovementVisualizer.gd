@@ -26,7 +26,7 @@ func _draw():
 	draw_vector(parent.direction, Vector2(), colors['GREEN'])
 	# draw_vector(parent.target_motion, Vector2(), colors['GREEN'])
 	# draw_vector(parent.steering * 5, Vector2(), colors['PINK'])
-	# draw_vector(parent.motion, Vector2(), colors['YELLOW'])
+	draw_vector(parent.motion, Vector2(), colors['YELLOW'])
 	pass
 
 func draw_vector(vector, offset, _color):
