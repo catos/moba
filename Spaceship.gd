@@ -1,13 +1,13 @@
 extends KinematicBody2D
 
-var direction = Vector2(0, -10)
+var direction = Vector2(0, -1)
 var motion = Vector2()
 var velocity = Vector2()
 
 var gravity = Vector2(0, 1)
 var speed = 0
 var target_angle = 0
-var MAX_SPEED = 100
+var MAX_SPEED = 200
 
 onready var DebugLabel = get_node("/root/Game/DebugLabel")
 onready var Sprite = get_node("Sprite")
@@ -24,9 +24,9 @@ func _fixed_process(delta):
 		speed -= 5
 
 	if Input.is_action_pressed("rotate_left"):
-		direction = rotate_by_radians(direction, -PI/100)
+		direction = rotate_by_radians(direction, -PI/50)
 	elif Input.is_action_pressed("rotate_right"):
-		direction = rotate_by_radians(direction, PI/100)
+		direction = rotate_by_radians(direction, PI/50)
 
 	speed = clamp(speed, 0, MAX_SPEED)
 	velocity = speed * direction.normalized() * delta

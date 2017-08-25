@@ -11,7 +11,7 @@ var colors = {
 
 const WIDTH = 4
 
-const MUL = 20
+const MUL = 100
 
 var parent = null
 
