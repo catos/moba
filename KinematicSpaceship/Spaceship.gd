@@ -1,18 +1,15 @@
 extends KinematicBody2D
 
+export var gravity = Vector2(0, 1)
+export var drag = Vector2()
+export var thruster_power = 150
+export var DAMP = 1
+
 var direction = Vector2(0, -1)
-
 var thrust = Vector2()
-var gravity = Vector2(0, 1)
-var drag = Vector2()
 var forces = Vector2()
-
 var velocity = Vector2()
 var position = Vector2()
-
-
-var thruster_power = 150
-const DAMP = 1
 
 onready var DebugLabel = get_node("/root/Game/DebugLabel")
 onready var Sprite = get_node("Sprite")
@@ -20,6 +17,13 @@ onready var Sprite = get_node("Sprite")
 
 func _ready():
 	set_fixed_process(true)
+	set_process_input(true)
+#	position = get_pos()
+
+func _input(event):
+	if event.type == InputEvent.KEY && !event.is_echo():
+		if event.is_action_pressed("reset"):
+				get_tree().reload_current_scene()
 
 func _fixed_process(delta):
 	var debug_text = ""
