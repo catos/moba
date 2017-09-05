@@ -4,8 +4,11 @@ export var thruster_power = 250
 
 onready var rotation = get_rot()
 
-var direction = Vector2()
-var thrust = Vector2(0, 1)
+var thrust = Vector2(0, -350)
+var torque = 2000
+
+var velocity = Vector2()
+var total_gravity = Vector2()
 
 onready var DebugLabel = get_node("/root/Game/DebugLabel")
 onready var Sprite = get_node("Sprite")
@@ -19,43 +22,26 @@ func _input(event):
 		if event.is_action_pressed("reset"):
 				get_tree().reload_current_scene()
 
-func _fixed_process(delta):
+func _integrate_forces(state):
 	var debug_text = ""
-	rotation = get_rot()
 	
-	# Rotate
-	if Input.is_action_pressed("rotate_left"):
-		set_rot(rotation + PI/75)
-	elif Input.is_action_pressed("rotate_right"):
-		set_rot(rotation - PI/75)
-
 	# Thrust
 	if Input.is_action_pressed("thruster"):
-		thrust = rotate_by_radians(thrust, rotation)
+		set_applied_force(state.get_total_gravity() + thrust.rotated(get_rot()))
 	else:
-		thrust = Vector2(0, 0)
+		set_applied_force(state.get_total_gravity() + Vector2())
 	
-#	add_force(Vector2(), thrust)
-#	apply_impulse(Vector2(), thrust)
-	
-	# Rotate ship to match direction
-	if direction != Vector2():
-		var target_angle = atan2(direction.x, direction.y) - PI
-		set_rot(target_angle)
-		
+	# Rotate
+	var t = Input.is_action_pressed("rotate_right") - Input.is_action_pressed("rotate_left")
+	set_applied_torque(torque * t)
+
+
 	# DEBUG
-	debug_text += "direction: " + str(direction) + "\n"
-	debug_text += "thrust: " + str(thrust) + "\n"
-	debug_text += "rotation: " + str(rotation) + "\n"
-	# debug_text += "drag: " + str(drag) + "\n"
-	# debug_text += "forces: " + str(forces) + "\n"
-	# debug_text += "----------------------\n"
-	# debug_text += "velocity: " + str(velocity) + "\n"
-	# debug_text += "position: " + str(position) + "\n"
+	velocity = get_linear_velocity()
+	total_gravity = state.get_total_gravity()
+	
+	debug_text += "velocity: " + str(velocity) + "\n"
+	debug_text += "thrust: " + str(thrust.rotated(get_rot())) + "\n"
+	debug_text += "total_gravity: " + str(total_gravity) + "\n"
 
 	DebugLabel.set_text(debug_text)
-
-func rotate_by_radians(vector, radians):
-	var ca = cos(radians)
-	var sa = sin(radians)
-	return Vector2(ca * vector.x - sa * vector.y, sa * vector.x + ca * vector.y)

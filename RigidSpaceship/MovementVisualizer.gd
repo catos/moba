@@ -9,9 +9,9 @@ var colors = {
 	PINK = Color(.914, .118, .388)
 }
 
-const WIDTH = 4
+const WIDTH = 2
 
-const MUL = 100
+const MUL = 1
 
 var parent = null
 
@@ -24,7 +24,8 @@ func _ready():
 
 func _draw():
 	draw_vector(parent.thrust, Vector2(), colors['GREEN'])
-	# draw_vector(parent.gravity, Vector2(), colors['PINK'])
+	draw_vector(parent.velocity, Vector2(), colors['YELLOW'])
+	draw_vector(parent.total_gravity, Vector2(), colors['PINK'])
 #	draw_vector(parent.forces, Vector2(), colors['YELLOW'])
 	# draw_vector(parent.drag, Vector2(), colors['GREEN'])
 #	draw_vector(parent.velocity, Vector2(), colors['WHITE'])
