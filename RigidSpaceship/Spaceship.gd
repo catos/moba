@@ -1,10 +1,10 @@
 extends RigidBody2D
 
 export var thruster_power = 350
-export var torque = 4000
+export var torque = 2000
 export var max_speed = 300
 
-var fuel = 10
+var fuel = 100
 var can_rotate = true
 var thrust = Vector2(0, -thruster_power)
 
@@ -32,10 +32,10 @@ func _integrate_forces(state):
 		set_applied_force(state.get_total_gravity() + Vector2())
 	
 	# Rotate
-	can_rotate = abs(get_linear_velocity().x) > 100 or abs(get_linear_velocity().y) > 100
-	if can_rotate:
-		var t = Input.is_action_pressed("rotate_right") - Input.is_action_pressed("rotate_left")
-		set_applied_torque(torque * t)
+#	can_rotate = abs(get_linear_velocity().x) > 100 or abs(get_linear_velocity().y) > 100
+#	if can_rotate:
+	var t = Input.is_action_pressed("rotate_right") - Input.is_action_pressed("rotate_left")
+	set_applied_torque(torque * t)
 
 	# Max velocity
 	if abs(get_linear_velocity().x) > max_speed or abs(get_linear_velocity().y) > max_speed:
