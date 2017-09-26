@@ -16,6 +16,9 @@ var explosion = preload("res://explosion.png")
 var explosion_data
 var explosion_size
 
+var dirt_block = preload("res://DirtBlock.tscn")
+var grass_block = preload("res://GrassBlock.tscn")
+
 func _ready():
 	background_data = Background.get_texture().get_data()
 	background_rect = background_data.get_used_rect()
@@ -26,20 +29,34 @@ func _ready():
 	print(background_rect)
 	print(Spaceship.get_pos())
 	
+	# Draw dirt scene
+	draw_dirt_island()
+	
 	set_process(true)
 	set_process_input(true)
 	set_pause_mode(PAUSE_MODE_PROCESS)
 
+func draw_dirt_island():
+	for i in range(10):
+		var db = grass_block.instance()
+		db.set_pos(Vector2(i * 16, 16 * 16))
+		add_child(db)
+
+	for i in range(8):
+		var db = dirt_block.instance()
+		db.set_pos(Vector2(i * 16 + 16, 16* 17))
+		add_child(db)
+
 func _process(delta):
 	debug_text = ""
 
-	if is_colliding_pixel():
+#	if is_colliding_pixel():
 #	if is_colliding_boxes():
-		print("collision with background")
-		Spaceship.set_linear_velocity(Vector2(0,0))
-		Spaceship.set_gravity_scale(0)
-	else:
-		Spaceship.set_gravity_scale(1)
+#		print("collision with background")
+#		Spaceship.set_linear_velocity(Vector2(0,0))
+#		Spaceship.set_gravity_scale(0)
+#	else:
+#		Spaceship.set_gravity_scale(1)
 		
 	DebugLabel.set_text(debug_text)
 
