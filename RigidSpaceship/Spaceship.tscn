@@ -1,13 +1,23 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=7 format=1]
 
 [ext_resource path="res://RigidSpaceship/Spaceship.gd" type="Script" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://spaceship.png" type="Texture" id=2]
 [ext_resource path="res://RigidSpaceship/MovementVisualizer.gd" type="Script" id=3]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="ConvexPolygonShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 15.8469, 15.7964 )
+points = Vector2Array( -15.5033, 36.0545, -23.7281, 59.7007, -31.8244, 36.44, -15.8889, 13.4364 )
+
+[sub_resource type="ConvexPolygonShape2D" id=2]
+
+custom_solver_bias = 0.0
+points = Vector2Array( 32.3032, 36.3115, 23.9499, 59.7007, 15.5966, 36.3115, 16.3677, 12.4083 )
+
+[sub_resource type="ConvexPolygonShape2D" id=3]
+
+custom_solver_bias = 0.0
+points = Vector2Array( -8.04962, 44.2793, -15.5033, 36.0545, -15.8889, 13.4364, -15.6318, -28.0731, 0.432159, -58.916, 16.2392, -27.6875, 16.3677, 12.4083, 15.5966, 36.3115, 8.39993, 44.4078 )
 
 [node name="Spaceship" type="RigidBody2D"]
 
@@ -16,10 +26,16 @@ input/pickable = false
 shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
+shapes/1/shape = SubResource( 2 )
+shapes/1/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/1/trigger = false
+shapes/2/shape = SubResource( 3 )
+shapes/2/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/2/trigger = false
 collision/layers = 1
 collision/mask = 1
 mode = 0
-mass = 1.0
+mass = 0.5
 friction = 1.0
 bounce = 0.0
 gravity_scale = 1.0
@@ -34,18 +50,14 @@ velocity/angular = 0.0
 damp_override/linear = -1.0
 damp_override/angular = 5.0
 script/script = ExtResource( 1 )
-thruster_power = 250
+thruster_power = 300
+torque = 4000
+max_speed = 300
 
 [node name="Sprite" type="Sprite" parent="."]
 
 transform/scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-
-shape = SubResource( 1 )
-trigger = false
-_update_shape_index = 0
 
 [node name="MovementVisualizer" type="Node2D" parent="."]
 
@@ -69,5 +81,12 @@ drag_margin/left = 0.2
 drag_margin/top = 0.2
 drag_margin/right = 0.2
 drag_margin/bottom = 0.2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+
+build_mode = 0
+polygon = Vector2Array( 0.432159, -58.916, -15.6318, -28.0731, -15.8889, 13.4364, -31.8244, 36.44, -23.7281, 59.7007, -15.5033, 36.0545, -8.04962, 44.2793, 8.39993, 44.4078, 15.5966, 36.3115, 23.9499, 59.7007, 32.3032, 36.3115, 16.3677, 12.4083, 16.2392, -27.6875 )
+shape_range = Vector2( 0, 2 )
+trigger = false
 
 

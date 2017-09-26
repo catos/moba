@@ -1,16 +1,14 @@
 extends RigidBody2D
 
-export var thruster_power = 250
+export var thruster_power = 350
+export var torque = 4000
+export var max_speed = 300
 
-onready var rotation = get_rot()
+var fuel = 10
+var can_rotate = true
+var thrust = Vector2(0, -thruster_power)
 
-var thrust = Vector2(0, -350)
-var torque = 2000
-
-var velocity = Vector2()
-var total_gravity = Vector2()
-
-onready var DebugLabel = get_node("/root/Game/DebugLabel")
+onready var DebugLabel = get_node("/root/Game/UI/DebugLabel")
 onready var Sprite = get_node("Sprite")
 
 func _ready():
@@ -27,21 +25,29 @@ func _integrate_forces(state):
 	
 	# Thrust
 	if Input.is_action_pressed("thruster"):
-		set_applied_force(state.get_total_gravity() + thrust.rotated(get_rot()))
+		fuel -= 0.025
+		if fuel > 0:
+			set_applied_force(state.get_total_gravity() + thrust.rotated(get_rot()))
 	else:
 		set_applied_force(state.get_total_gravity() + Vector2())
 	
 	# Rotate
-	var t = Input.is_action_pressed("rotate_right") - Input.is_action_pressed("rotate_left")
-	set_applied_torque(torque * t)
+	can_rotate = abs(get_linear_velocity().x) > 100 or abs(get_linear_velocity().y) > 100
+	if can_rotate:
+		var t = Input.is_action_pressed("rotate_right") - Input.is_action_pressed("rotate_left")
+		set_applied_torque(torque * t)
 
+	# Max velocity
+	if abs(get_linear_velocity().x) > max_speed or abs(get_linear_velocity().y) > max_speed:
+		var new_speed = get_linear_velocity().normalized() * max_speed
+		set_linear_velocity(new_speed)
+		
 
 	# DEBUG
-	velocity = get_linear_velocity()
-	total_gravity = state.get_total_gravity()
-	
-	debug_text += "velocity: " + str(velocity) + "\n"
+	debug_text += "fuel: " + str(fuel) + "\n"
+	debug_text += "can_rotate: " + str(can_rotate) + "\n"
+	debug_text += "velocity: " + str(get_linear_velocity()) + "\n"
 	debug_text += "thrust: " + str(thrust.rotated(get_rot())) + "\n"
-	debug_text += "total_gravity: " + str(total_gravity) + "\n"
+	debug_text += "total_gravity: " + str(state.get_total_gravity()) + "\n"
 
 	DebugLabel.set_text(debug_text)
