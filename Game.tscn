@@ -37,10 +37,6 @@ default/reverb_room = 2
 default/reverb_send = 0.0
 default/chorus_send = 0.0
 
-[node name="Spaceship" parent="." instance=ExtResource( 4 )]
-
-transform/pos = Vector2( 482.79, 399.661 )
-
 [node name="UI" type="CanvasLayer" parent="."]
 
 layer = 1
@@ -61,5 +57,7 @@ margin/bottom = 14.0
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+
+[node name="Spaceship" parent="." instance=ExtResource( 4 )]
 
 
