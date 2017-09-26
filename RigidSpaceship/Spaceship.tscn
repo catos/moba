@@ -72,4 +72,11 @@ polygon = Vector2Array( 0.16748, -20.7402, -16.056, 10.801, -16.056, 19.801, 15.
 shape_range = Vector2( 0, 0 )
 trigger = false
 
+[node name="WeaponTimer" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
+
 

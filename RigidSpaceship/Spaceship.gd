@@ -17,23 +17,33 @@ onready var Sprite = get_node("Sprite")
 
 const scn_laser = preload("res://Laser.tscn")
 
+# Timer
+onready var WeaponTimer = get_node("WeaponTimer")
+var weapon_delay = 0.25
+var can_shoot = true
+
 func _ready():
+	WeaponTimer.set_one_shot(true)
+	WeaponTimer.set_wait_time(weapon_delay)
+	WeaponTimer.connect("timeout", self, "on_weapon_timeout")
+	
 	set_fixed_process(true)
 	set_process_input(true)
 
+func on_weapon_timeout():
+	can_shoot = true
+
 func _input(event):
-	if event.type == InputEvent.KEY && !event.is_echo():
-		if event.is_action_pressed("reset"):
-				get_tree().reload_current_scene()
+	if Input.is_action_pressed("reset"):
+			get_tree().reload_current_scene()
+	
+	if Input.is_action_pressed("shoot") && can_shoot:
+		shoot(Vector2())
+		can_shoot = false
+		WeaponTimer.start()
 
 func _integrate_forces(state):
 	var debug_text = ""
-	
-	position = get_pos()
-	
-	# Shoot
-	if Input.is_action_pressed("shoot"):
-		shoot(position)
 		
 	# Thrust
 	if Input.is_action_pressed("thruster"):
@@ -59,8 +69,8 @@ func _integrate_forces(state):
 	debug_text += "velocity: " + str(get_linear_velocity()) + "\n"
 	debug_text += "thrust: " + str(thrust.rotated(get_rot())) + "\n"
 	debug_text += "total_gravity: " + str(state.get_total_gravity()) + "\n"
-	debug_text += "position: " + str(position) + "\n"
-	debug_text += "laser rotation: " + str(get_pos().angle_to_point(get_local_mouse_pos())) + "\n"
+	debug_text += "position: " + str(get_pos()) + "\n"
+	debug_text += "can_shoot: " + str(can_shoot) + ": " + str(WeaponTimer.get_time_left()) + "\n"
 	
 	DebugLabel.set_text(debug_text)
 	pass
