@@ -4,6 +4,7 @@ export var thruster_power = 450
 export var torque = 2000
 export var max_speed = 300
 export var weapon_delay = 0.25
+export var fuel_consumption = 0.05
 
 var fuel = 100
 var can_rotate = true
@@ -58,7 +59,7 @@ func _integrate_forces(state):
 	
 	# Thrust
 	if Input.is_action_pressed("thruster"):
-		fuel -= 0.025
+		fuel -= fuel_consumption
 		if fuel > 0:
 			set_applied_force(state.get_total_gravity() + thrust.rotated(get_rot()))
 	else:
