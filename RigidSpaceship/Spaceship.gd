@@ -1,25 +1,25 @@
 extends RigidBody2D
 
-export var thruster_power = 350
+export var thruster_power = 450
 export var torque = 2000
 export var max_speed = 300
+export var weapon_delay = 0.25
 
 var fuel = 100
 var can_rotate = true
 var thrust = Vector2(0, -thruster_power)
 
 var position = Vector2()
-var angle_to_mouse
+var mouse_pos = Vector2()
+var mouse_angle = 0
 
-onready var Game = get_node("/root/Game")
 onready var DebugLabel = get_node("/root/Game/UI/DebugLabel")
-onready var Sprite = get_node("Sprite")
-
+onready var FuelLabel = get_node("/root/Game/UI/FuelLabel")
+onready var LaserContainer = get_node("LaserContainer")
 const scn_laser = preload("res://Laser.tscn")
 
 # Timer
 onready var WeaponTimer = get_node("WeaponTimer")
-var weapon_delay = 0.25
 var can_shoot = true
 
 func _ready():
@@ -35,16 +35,19 @@ func on_weapon_timeout():
 
 func _input(event):
 	if Input.is_action_pressed("reset"):
-			get_tree().reload_current_scene()
+		get_tree().reload_current_scene()
 	
 	if Input.is_action_pressed("shoot") && can_shoot:
-		shoot(Vector2())
+		shoot()
 		can_shoot = false
 		WeaponTimer.start()
 
 func _integrate_forces(state):
 	var debug_text = ""
-		
+	
+	mouse_pos = get_viewport().get_mouse_pos()
+	mouse_angle = get_pos().angle_to_point(mouse_pos)
+	
 	# Thrust
 	if Input.is_action_pressed("thruster"):
 		fuel -= 0.025
@@ -63,20 +66,23 @@ func _integrate_forces(state):
 		set_linear_velocity(new_speed)
 		
 
+	# UI
+	FuelLabel.set_text("Fuel: " + str(round(fuel)) + "%")
+
 	# DEBUG
-	debug_text += "fuel: " + str(fuel) + "\n"
-	debug_text += "can_rotate: " + str(can_rotate) + "\n"
 	debug_text += "velocity: " + str(get_linear_velocity()) + "\n"
 	debug_text += "thrust: " + str(thrust.rotated(get_rot())) + "\n"
 	debug_text += "total_gravity: " + str(state.get_total_gravity()) + "\n"
 	debug_text += "position: " + str(get_pos()) + "\n"
 	debug_text += "can_shoot: " + str(can_shoot) + ": " + str(WeaponTimer.get_time_left()) + "\n"
+	debug_text += "mouse_pos: " + str(mouse_pos) + "\n"
+	debug_text += "mouse_angle: " + str(mouse_angle) + "\n"
 	
 	DebugLabel.set_text(debug_text)
 	pass
 
-func shoot(pos):
+func shoot():
 	var laser = scn_laser.instance()
-	laser.setup(pos, get_linear_velocity(), get_global_mouse_pos().normalized(), get_pos().angle_to_point(get_local_mouse_pos()))
-	Game.add_child(laser)
+	LaserContainer.add_child(laser)
+	laser.setup(get_node("LaserSpawnPoint").get_global_pos(), get_rot())
 	pass

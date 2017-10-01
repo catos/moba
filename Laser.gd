@@ -1,21 +1,21 @@
 extends KinematicBody2D
 
 var velocity = Vector2()
-onready var timer = get_node("Timer")
-
-func setup(_position, _ship_velocity, _velocity, _angle):
-	velocity = Vector2(0, -200)
-	set_pos(_position)
-#	set_rot(_angle)
+export var speed = 1000
 
 func _ready():
-	timer.set_wait_time(1)
-	timer.connect("timeout", self, "_on_timer_timeout") 
-	timer.start()
-	set_process(true)
+	get_node("Lifetime").start()
+	set_fixed_process(true)
 	
-func _process(delta):
-	translate(velocity * delta)
-	
-func _on_timer_timeout():
+func setup(_position, _rotation):
+	set_rot(_rotation)
+	set_pos(_position)
+	velocity = Vector2(speed, 0).rotated(_rotation + PI/2)
+
+func _fixed_process(delta):
+#	translate(velocity * delta)
+	set_pos(get_pos() + velocity * delta)
+
+func _on_Lifetime_timeout():
 	queue_free()
+

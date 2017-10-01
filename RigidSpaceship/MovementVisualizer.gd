@@ -23,10 +23,10 @@ func _ready():
 
 
 func _draw():
-	draw_vector(parent.thrust, Vector2(), colors['GREEN'])
-	draw_vector(parent.get_linear_velocity(), Vector2(), colors['YELLOW'])
+#	draw_vector(parent.thrust, Vector2(), colors['GREEN'])
+#	draw_vector(parent.get_linear_velocity(), Vector2(), colors['YELLOW'])
 #	draw_vector(parent.forces, Vector2(), colors['YELLOW'])
-	# draw_vector(parent.drag, Vector2(), colors['GREEN'])
+#	draw_vector(parent.drag, Vector2(), colors['GREEN'])
 #	draw_vector(parent.velocity, Vector2(), colors['WHITE'])
 
 	pass

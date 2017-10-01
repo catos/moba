@@ -3,23 +3,27 @@
 [ext_resource path="res://Laser.gd" type="Script" id=1]
 [ext_resource path="res://laser.png" type="Texture" id=2]
 
-[node name="KinematicBody2D" type="KinematicBody2D"]
+[node name="Laser" type="KinematicBody2D"]
 
 input/pickable = false
 collision/layers = 1
 collision/mask = 1
 collision/margin = 0.08
 script/script = ExtResource( 1 )
+speed = 1000
 
 [node name="Sprite" type="Sprite" parent="."]
 
+transform/scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Lifetime" type="Timer" parent="."]
 
 process_mode = 1
 wait_time = 1.0
 one_shot = false
-autostart = false
+autostart = true
+
+[connection signal="timeout" from="Lifetime" to="." method="_on_Lifetime_timeout"]
 
 

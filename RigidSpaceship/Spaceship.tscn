@@ -36,6 +36,7 @@ script/script = ExtResource( 1 )
 thruster_power = 350
 torque = 2000
 max_speed = 300
+weapon_delay = 0.25
 
 [node name="Sprite" type="Sprite" parent="."]
 
@@ -78,5 +79,11 @@ process_mode = 1
 wait_time = 1.0
 one_shot = false
 autostart = false
+
+[node name="LaserContainer" type="Node" parent="."]
+
+[node name="LaserSpawnPoint" type="Position2D" parent="."]
+
+transform/pos = Vector2( 0, -22 )
 
 
