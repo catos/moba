@@ -16,6 +16,8 @@ var mouse_angle = 0
 onready var DebugLabel = get_node("/root/Game/UI/DebugLabel")
 onready var FuelLabel = get_node("/root/Game/UI/FuelLabel")
 onready var LaserContainer = get_node("LaserContainer")
+onready var Camera = get_node("Camera")
+
 const scn_laser = preload("res://Laser.tscn")
 
 # Timer
@@ -41,6 +43,12 @@ func _input(event):
 		shoot()
 		can_shoot = false
 		WeaponTimer.start()
+	
+	if Input.is_action_pressed("zoom_out"):
+		Camera.set_zoom(Camera.get_zoom() * 1.25)
+
+	if Input.is_action_pressed("zoom_in"):
+		Camera.set_zoom(Camera.get_zoom() * 0.75)
 
 func _integrate_forces(state):
 	var debug_text = ""

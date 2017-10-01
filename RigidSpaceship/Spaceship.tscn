@@ -46,7 +46,7 @@ texture = ExtResource( 2 )
 
 script/script = ExtResource( 3 )
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera" type="Camera2D" parent="."]
 
 transform/scale = Vector2( 2, 2 )
 anchor_mode = 1
@@ -66,7 +66,7 @@ drag_margin/top = 0.2
 drag_margin/right = 0.2
 drag_margin/bottom = 0.2
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+[node name="Collision" type="CollisionPolygon2D" parent="."]
 
 build_mode = 0
 polygon = Vector2Array( 0.16748, -20.7402, -16.056, 10.801, -16.056, 19.801, 15.944, 19.801, 15.944, 10.801 )

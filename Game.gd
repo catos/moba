@@ -14,21 +14,31 @@ var grass_block = preload("res://GrassBlock.tscn")
 
 func _ready():
 	# Draw dirt scene
-	draw_dirt_island()
+	draw_islands()
 	
 	set_process(true)
 	set_process_input(true)
 	set_pause_mode(PAUSE_MODE_PROCESS)
 
-func draw_dirt_island():
+func draw_islands():
+	for i in range(16):
+		var rnd1 = floor(rand_range(-64, 64))
+		var rnd2 = floor(rand_range(-64, 64))
+		print(str(rnd1) + ", " + str(rnd2))
+		draw_dirt_island(rnd1, rnd2)
+	
+func draw_dirt_island(pos_x, pos_y):
+	var offset_x = pos_x * 16
+	var offset_y = pos_y * 16
+	
 	for i in range(10):
 		var db = grass_block.instance()
-		db.set_pos(Vector2(i * 16, 16 * 16))
+		db.set_pos(Vector2(i * 16 + offset_x, 16 + offset_y))
 		add_child(db)
 
 	for i in range(8):
 		var db = dirt_block.instance()
-		db.set_pos(Vector2(i * 16 + 16, 16* 17))
+		db.set_pos(Vector2(i * 16 + 16 + offset_x, 16 + 16 + offset_y))
 		add_child(db)
 
 func _input(event):

@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=1]
+[gd_scene load_steps=5 format=1]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
-[ext_resource path="res://Level-1.tscn" type="PackedScene" id=2]
-[ext_resource path="res://sfx/EQUIPMENT Cloth Ruffle 03.smp" type="Sample" id=3]
-[ext_resource path="res://RigidSpaceship/Spaceship.tscn" type="PackedScene" id=4]
+[ext_resource path="res://sfx/EQUIPMENT Cloth Ruffle 03.smp" type="Sample" id=2]
+[ext_resource path="res://RigidSpaceship/Spaceship.tscn" type="PackedScene" id=3]
 
 [sub_resource type="SampleLibrary" id=1]
 
@@ -11,14 +10,12 @@
 "db": 0.0,
 "pitch": 1.0,
 "priority": 0,
-"sample": ExtResource( 3 )
+"sample": ExtResource( 2 )
 }
 
 [node name="Game" type="Node2D"]
 
 script/script = ExtResource( 1 )
-
-[node name="Level1" parent="." instance=ExtResource( 2 )]
 
 [node name="SamplePlayer" type="SamplePlayer" parent="."]
 
@@ -74,6 +71,6 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Spaceship" parent="." instance=ExtResource( 4 )]
+[node name="Spaceship" parent="." instance=ExtResource( 3 )]
 
 
