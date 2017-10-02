@@ -3,7 +3,7 @@ extends RigidBody2D
 export var thruster_power = 450
 export var torque = 2000
 export var max_speed = 300
-export var weapon_delay = 0.25
+export var weapon_delay = 0.125
 export var fuel_consumption = 0.05
 
 var fuel = 100
@@ -16,6 +16,8 @@ var mouse_angle = 0
 
 onready var DebugLabel = get_node("/root/Game/UI/DebugLabel")
 onready var FuelLabel = get_node("/root/Game/UI/FuelLabel")
+
+onready var Thrusters = get_node("Thrusters")
 onready var LaserContainer = get_node("LaserContainer")
 onready var Camera = get_node("Camera")
 
@@ -59,10 +61,13 @@ func _integrate_forces(state):
 	
 	# Thrust
 	if Input.is_action_pressed("thruster"):
+		Thrusters.show()
+		Globals.set("triggerThrustSound", true)
 		fuel -= fuel_consumption
 		if fuel > 0:
 			set_applied_force(state.get_total_gravity() + thrust.rotated(get_rot()))
 	else:
+		Thrusters.hide()
 		set_applied_force(state.get_total_gravity() + Vector2())
 	
 	# Rotate
@@ -94,4 +99,4 @@ func shoot():
 	var laser = scn_laser.instance()
 	LaserContainer.add_child(laser)
 	laser.setup(get_node("LaserSpawnPoint").get_global_pos(), get_rot())
-	pass
+	Globals.set("triggerLaserSound", true)

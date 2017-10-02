@@ -1,7 +1,7 @@
 extends Node
 
 onready var TileMap = get_node("/root/Game/TileMap")
-onready var level_data = preload("res://level-2.png").get_data()
+onready var level_data = preload("res://level-1.png").get_data()
 
 const TRANSPARENT_COLOR = Color(0, 0, 0, 0)
 const STONE_COLOR = Color(0, 0, 0, 1)

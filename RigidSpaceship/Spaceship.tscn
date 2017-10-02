@@ -1,20 +1,37 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=8 format=1]
 
 [ext_resource path="res://RigidSpaceship/Spaceship.gd" type="Script" id=1]
 [ext_resource path="res://spaceship.png" type="Texture" id=2]
 [ext_resource path="res://RigidSpaceship/MovementVisualizer.gd" type="Script" id=3]
+[ext_resource path="res://spaceship-thrusters.png" type="Texture" id=4]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 
 custom_solver_bias = 0.0
-points = Vector2Array( 15.944, 10.801, 15.944, 19.801, -16.056, 19.801, -16.056, 10.801, 0.16748, -20.7402 )
+points = Vector2Array( -10.3855, 6.97191, -4.38554, -31.0281, 3.61446, -31.0281, 9.61446, 6.97191, 3.61446, 27.9719, -4.38554, 27.9719 )
+
+[sub_resource type="ConvexPolygonShape2D" id=2]
+
+custom_solver_bias = 0.0
+points = Vector2Array( 26.6145, 16.9719, 26.6145, 23.9719, 3.61446, 27.9719, 9.61446, 6.97191 )
+
+[sub_resource type="ConvexPolygonShape2D" id=3]
+
+custom_solver_bias = 0.0
+points = Vector2Array( -10.3855, 6.97191, -4.38554, 27.9719, -27.3855, 23.9719, -27.3855, 16.9719 )
 
 [node name="Spaceship" type="RigidBody2D"]
 
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0.385536, 1.02809 )
 shapes/0/trigger = false
+shapes/1/shape = SubResource( 2 )
+shapes/1/transform = Matrix32( 1, 0, 0, 1, 0.385536, 1.02809 )
+shapes/1/trigger = false
+shapes/2/shape = SubResource( 3 )
+shapes/2/transform = Matrix32( 1, 0, 0, 1, 0.385536, 1.02809 )
+shapes/2/trigger = false
 collision/layers = 1
 collision/mask = 1
 mode = 0
@@ -37,6 +54,7 @@ thruster_power = 350
 torque = 2000
 max_speed = 300
 weapon_delay = 0.25
+fuel_consumption = 0.05
 
 [node name="Sprite" type="Sprite" parent="."]
 
@@ -68,9 +86,10 @@ drag_margin/bottom = 0.2
 
 [node name="Collision" type="CollisionPolygon2D" parent="."]
 
+transform/pos = Vector2( 0.385536, 1.02809 )
 build_mode = 0
-polygon = Vector2Array( 0.16748, -20.7402, -16.056, 10.801, -16.056, 19.801, 15.944, 19.801, 15.944, 10.801 )
-shape_range = Vector2( 0, 0 )
+polygon = Vector2Array( -4.38554, -31.0281, -10.3855, 6.97191, -27.3855, 16.9719, -27.3855, 23.9719, -4.38554, 27.9719, 3.61446, 27.9719, 26.6145, 23.9719, 26.6145, 16.9719, 9.61446, 6.97191, 3.61446, -31.0281 )
+shape_range = Vector2( 0, 2 )
 trigger = false
 
 [node name="WeaponTimer" type="Timer" parent="."]
@@ -85,5 +104,12 @@ autostart = false
 [node name="LaserSpawnPoint" type="Position2D" parent="."]
 
 transform/pos = Vector2( 0, -22 )
+
+[node name="Thrusters" type="Sprite" parent="."]
+
+visibility/visible = false
+transform/pos = Vector2( 0, 33 )
+z/z = -1
+texture = ExtResource( 4 )
 
 
