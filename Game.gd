@@ -7,11 +7,9 @@ onready var MovementVisualizer = get_node("Spaceship/MovementVisualizer")
 
 var Spaceship = preload("res://RigidSpaceship/Spaceship.tscn")
 
-onready var level_generator = preload("LevelGenerator.gd").new()
-
 func _ready():
 	print("Game _ready")
-#	level_generator.draw_level()
+	LevelGenerator.draw_level()
 	
 	# Spawn player
 	var spaceship = Spaceship.instance()
