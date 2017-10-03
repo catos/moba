@@ -21,7 +21,6 @@ onready var fuel_label = get_node("/root/Game/UI/FuelLabel")
 
 onready var thrusters = get_node("Thrusters")
 onready var laser_container = get_node("LaserContainer")
-onready var camera = get_node("Camera")
 
 const scn_laser = preload("res://Laser.tscn")
 
@@ -49,12 +48,6 @@ func _input(event):
 		can_shoot = false
 		WeaponTimer.start()
 	
-	if Input.is_action_pressed("zoom_out"):
-		camera.set_zoom(camera.get_zoom() * 1.25)
-
-	if Input.is_action_pressed("zoom_in"):
-		Camera.set_zoom(Camera.get_zoom() * 0.75)
-
 	if Input.is_action_pressed("debug"):
 		debug = not debug
 		movement_visualizer.set("visibility/visible", debug)
@@ -108,6 +101,5 @@ func _integrate_forces(state):
 func shoot():
 	var laser = scn_laser.instance()
 	laser_container.add_child(laser)
-	print(get_node("LaserSpawnPoint").get_global_pos())
 	laser.setup(get_node("LaserSpawnPoint").get_global_pos(), get_rot())
 	Globals.set("triggerLaserSound", true)

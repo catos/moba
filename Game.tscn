@@ -47,7 +47,7 @@ loop_end = 0
 [sub_resource type="SampleLibrary" id=4]
 
 samples/thrusters = {
-"db": 0.0,
+"db": 0.5,
 "pitch": 1.0,
 "priority": 0,
 "sample": SubResource( 3 )

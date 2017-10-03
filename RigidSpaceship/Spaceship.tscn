@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=1]
+[gd_scene load_steps=9 format=1]
 
 [ext_resource path="res://RigidSpaceship/Spaceship.gd" type="Script" id=1]
 [ext_resource path="res://spaceship.png" type="Texture" id=2]
 [ext_resource path="res://RigidSpaceship/MovementVisualizer.gd" type="Script" id=3]
-[ext_resource path="res://spaceship-thrusters.png" type="Texture" id=4]
+[ext_resource path="res://Camera.gd" type="Script" id=4]
+[ext_resource path="res://spaceship-thrusters.png" type="Texture" id=5]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 
@@ -84,6 +85,7 @@ drag_margin/left = 0.2
 drag_margin/top = 0.2
 drag_margin/right = 0.2
 drag_margin/bottom = 0.2
+script/script = ExtResource( 4 )
 
 [node name="Collision" type="CollisionPolygon2D" parent="."]
 
@@ -104,13 +106,13 @@ autostart = false
 
 [node name="LaserSpawnPoint" type="Position2D" parent="."]
 
-transform/pos = Vector2( 0, -116 )
+transform/pos = Vector2( 0, -31 )
 
 [node name="Thrusters" type="Sprite" parent="."]
 
 visibility/visible = false
 transform/pos = Vector2( 0, 33 )
 z/z = -1
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 
 
