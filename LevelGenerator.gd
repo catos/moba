@@ -1,6 +1,6 @@
 extends Node
 
-onready var TileMap = get_node("/root/Game/TileMap")
+onready var tilemap = get_node("/root/Game/TileMap")
 onready var level_data = preload("res://level-1.png").get_data()
 
 const TRANSPARENT_COLOR = Color(0, 0, 0, 0)
@@ -22,4 +22,4 @@ func draw_level():
 					block_id = 2
 				
 			if pixel == STONE_COLOR:
-				TileMap.set_cell(x, y, block_id)
+				tilemap.set_cell(x, y, block_id)

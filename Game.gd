@@ -2,8 +2,7 @@ extends Node
 
 var debug = false
 var debug_text
-onready var DebugLabel = get_node("/root/Game/UI/DebugLabel")
-onready var MovementVisualizer = get_node("Spaceship/MovementVisualizer")
+onready var debug_label = get_node("/root/Game/UI/DebugLabel")
 
 var Spaceship = preload("res://RigidSpaceship/Spaceship.tscn")
 
@@ -31,6 +30,4 @@ func _input(event):
 	# Toggle debug-info
 	if event.is_action_pressed("debug"):
 		debug = not debug
-		MovementVisualizer.set("visibility/visible", debug)
-		DebugLabel.set("visibility/visible", debug)
-		
+		debug_label.set("visibility/visible", debug)

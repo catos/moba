@@ -13,8 +13,13 @@ func setup(_position, _rotation):
 	velocity = Vector2(speed, 0).rotated(_rotation + PI/2)
 
 func _fixed_process(delta):
-#	translate(velocity * delta)
-	set_pos(get_pos() + velocity * delta)
+	move(get_pos() + velocity * delta)
+	
+	if is_colliding():
+		var collider = get_collider()
+		print(collider)
+		if collider extends TileMap:
+			print("TileMap collision")
 
 func _on_Lifetime_timeout():
 	queue_free()
